@@ -2,13 +2,16 @@ import { Lock, Trophy } from 'lucide-react'
 
 interface LessonNodeProps {
   type: 'lesson' | 'chest' | 'practice' | 'unit'
-  status: 'current' | 'locked' | 'completed'
+  status: 'current' | 'locked' | 'completed' | 'available'
   showStartButton?: boolean
+  onClick?: () => void
 }
 
-const LessonNode = ({ type, status }: LessonNodeProps) => {
+const LessonNode = ({ type, status, onClick }: LessonNodeProps) => {
   const isLocked = status === 'locked'
+  const isAvailable = status === 'available'
   const isCurrent = status === 'current'
+  const isCompleted = status === 'completed'
 
   // Determine the background color and styling
   const getNodeStyle = () => {
@@ -18,7 +21,10 @@ const LessonNode = ({ type, status }: LessonNodeProps) => {
     if (isCurrent) {
       return 'bg-[#58CC02]'
     }
-    return 'bg-yellow-400'
+    if (isCompleted) {
+      return 'bg-yellow-400'
+    }
+    return 'bg-gray-300' // Available também usa cinza
   }
 
   const renderNodeContent = () => {
@@ -42,7 +48,7 @@ const LessonNode = ({ type, status }: LessonNodeProps) => {
         <div className="relative">
           <div className={`
             w-32 h-32 rounded-full
-            flex items-center justify-center
+            flex itemsMt-center justify-center
             ${!isLocked ? 'ring-8 ring-gray-100' : ''}
             animate-float
           `}>
@@ -69,32 +75,33 @@ const LessonNode = ({ type, status }: LessonNodeProps) => {
       )
     }
 
-    // Default lesson type
+    // Default lesson type (stars)
     return (
-      <div className={`
-        relative
-        transition-all duration-300 hover:scale-105
-      `}>
+      <button
+        onClick={isLocked ? undefined : onClick}
+        disabled={isLocked}
+        className={`
+          relative
+          transition-all duration-300 hover:scale-105
+          ${isLocked ? 'cursor-not-allowed' : 'cursor-pointer'}
+        `}
+      >
+        {/* Sempre mostrar estrela cinza, exceto quando realmente completada */}
+        {/* Available e locked sempre são cinza */}
         <img 
-          src={isLocked ? '/gray-star.png' : '/green-star.png'}
-          alt={isLocked ? 'Lição bloqueada' : 'Lição disponível'}
+          src={isCompleted ? '/green-star.png' : '/gray-star.png'}
+          alt={isLocked ? 'Lição bloqueada' : isCompleted ? 'Lição completada' : 'Lição disponível'}
           className="w-20 h-20 object-contain drop-shadow-lg"
         />
-      </div>
+      </button>
     )
   }
 
   return (
     <div className="relative flex flex-col items-center">
-      {/* {showStartButton && (
-        <div className="mb-4 bg-white border-2 border-gray-300 rounded-2xl px-6 py-3 font-bold text-[#58CC02] text-lg uppercase shadow-md">
-          Começar
-        </div>
-      )} */}
       {renderNodeContent()}
     </div>
   )
 }
 
 export default LessonNode
-

@@ -97,5 +97,20 @@
   .animate-fadeOut {
     animation: fadeOut 0.6s ease-in-out;
   }
+
+  @keyframes slideUp {
+    from {
+      transform: translate(-50%, 100px);
+      opacity: 0;
+    }
+    to {
+      transform: translate(-50%, 0);
+      opacity: 1;
+    }
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
 }
 
