@@ -42,7 +42,8 @@ const LessonModal = ({ isOpen, onClose, unitId = 1 }: LessonModalProps) => {
   }, [allLessons, unitId, lessonsPerUnit])
 
   const totalLessons = lessons.length
-  const progress = totalLessons > 0 ? ((selectedLessonIndex !== null ? selectedLessonIndex + 1 : 0) / totalLessons) * 100 : 0
+  // Progress circle commented out, but keeping progress calculation for potential future use
+  // const progress = totalLessons > 0 ? ((selectedLessonIndex !== null ? selectedLessonIndex + 1 : 0) / totalLessons) * 100 : 0
 
   const handleStartLesson = () => {
     if (selectedLessonIndex !== null && lessons[selectedLessonIndex]) {

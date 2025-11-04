@@ -36,9 +36,9 @@ const Login = () => {
         setLoading(false)
       } else {
         console.log('✅ Login bem-sucedido, redirecionando...')
-        // Redireciona para seleção de linguagem após login
-        // TODO: Verificar se usuário já tem preferências salvas e pular para home se tiver
-        navigate('/language-selection', { replace: true })
+        // Redireciona para home - o ProtectedRoute vai verificar se tem preferências
+        // e redirecionar para /language-selection se necessário
+        navigate('/', { replace: true })
         setLoading(false)
       }
     } catch (err: any) {
@@ -49,8 +49,10 @@ const Login = () => {
   }
 
   const handleGoogleSuccess = () => {
-    // Redireciona para seleção de linguagem após login
-    navigate('/language-selection', { replace: true })
+    // Redireciona para home - o ProtectedRoute vai verificar se tem preferências
+    // e redirecionar para /language-selection se necessário
+    // Para OAuth do Google, o redirectTo já está configurado no AuthContext
+    navigate('/', { replace: true })
   }
 
   return (

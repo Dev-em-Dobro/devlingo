@@ -1,6 +1,6 @@
-import { ArrowLeft, LogOut } from 'lucide-react'
+import { LogOut } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-import { IoLogoJavascript, IoFlame, IoDiamond, IoHeart } from 'react-icons/io5'
+import { IoFlame, IoDiamond, IoHeart } from 'react-icons/io5'
 import { useUserProfile } from '../hooks/useUserProfile'
 import { useUserPreferences } from '../contexts/UserPreferencesContext'
 import { useAuth } from '../contexts/AuthContext'

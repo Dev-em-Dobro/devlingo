@@ -89,8 +89,6 @@ const LessonScreen = () => {
       setIsCorrect(false)
     } else {
       // Lição concluída - verificar se passou
-      const accuracy = Math.round((correctAnswers / totalQuestions) * 100)
-      
       // Se acertou todas as questões (100% de precisão)
       if (wrongAnswers === 0 && correctAnswers === totalQuestions) {
         // Salvar pontuação antes de navegar

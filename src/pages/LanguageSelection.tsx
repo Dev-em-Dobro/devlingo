@@ -28,7 +28,7 @@ const languages = [
 ]
 
 const LanguageSelection = () => {
-  const { preferences, setLanguage, hasCompletedSetup } = useUserPreferences()
+  const { preferences, setLanguage, loading: preferencesLoading } = useUserPreferences()
   const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(preferences.language || null)
   const navigate = useNavigate()
 
@@ -42,8 +42,22 @@ const LanguageSelection = () => {
   const handleContinue = () => {
     if (selectedLanguage) {
       setLanguage(selectedLanguage)
+      // Sempre vai para seleção de nível, mesmo se já tiver nível configurado
+      // Isso permite que o usuário troque de linguagem E nível
       navigate('/level-selection')
     }
+  }
+
+  // Mostra loading enquanto carrega preferências
+  if (preferencesLoading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#9225D4] mx-auto mb-4"></div>
+          <p className="text-gray-600">Carregando...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -52,7 +66,7 @@ const LanguageSelection = () => {
       <div className="bg-white border-b border-gray-200 py-3 px-4">
         <div className="flex items-center gap-3 md:max-w-3xl md:mx-auto">
           <button
-            onClick={() => hasCompletedSetup ? navigate('/') : navigate('/login')}
+            onClick={() => navigate('/')}
             className="text-gray-600 hover:text-gray-900 transition-colors"
           >
             <ArrowLeft size={24} />

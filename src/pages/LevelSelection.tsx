@@ -31,9 +31,9 @@ const levels = [
 ]
 
 const LevelSelection = () => {
-  const [selectedLevel, setSelectedLevel] = useState<Level | null>(null)
+  const { preferences, setLevel } = useUserPreferences()
+  const [selectedLevel, setSelectedLevel] = useState<Level | null>(preferences.level || null)
   const navigate = useNavigate()
-  const { preferences, setLevel, hasCompletedSetup } = useUserPreferences()
 
   useEffect(() => {
     // Se não tem linguagem selecionada, volta para seleção de linguagem
@@ -41,6 +41,13 @@ const LevelSelection = () => {
       navigate('/language-selection')
     }
   }, [preferences.language, navigate])
+
+  // Atualiza o nível selecionado quando as preferências mudarem
+  useEffect(() => {
+    if (preferences.level) {
+      setSelectedLevel(preferences.level)
+    }
+  }, [preferences.level])
 
   const handleContinue = () => {
     if (selectedLevel && preferences.language) {

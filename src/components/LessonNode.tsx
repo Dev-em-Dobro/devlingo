@@ -9,7 +9,6 @@ interface LessonNodeProps {
 
 const LessonNode = ({ type, status, onClick }: LessonNodeProps) => {
   const isLocked = status === 'locked'
-  const isAvailable = status === 'available'
   const isCurrent = status === 'current'
   const isCompleted = status === 'completed'
 
